@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { users } from './db/schema/users';
 import { createDbClient } from './db/client';
 import type { User, NewUser } from './db/schema/users';
+import article from './article'
 
 type Bindings = {
   DB: D1Database;
@@ -74,4 +75,5 @@ app.post('/users', async (c) => {
 //   return c.json({ message: 'User deleted' });
 // });
 
+app.route('article', article)
 export default app;

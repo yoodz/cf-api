@@ -81,8 +81,11 @@ app.post('/addMany', async (c) => {
     const db = createDbClient(c.env.DB);
     const dataList = await c.req.json();
     try {
-        const promises = dataList.list.map((chunk: Article) =>
+        const promises = dataList.list.map((chunk: Article) => {
+            chunk.createdAt = Math.ceil(Date.now() / 1000)
+            chunk.updateAt = Math.ceil(Date.now() / 1000)
             db.insert(article).values(chunk).returning({ id: rss.id }).all()
+        }
         );
         const results = await Promise.all(promises);
 

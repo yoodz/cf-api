@@ -5,7 +5,7 @@ const config = sqliteTable('config', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   key: text('key').notNull(),
   value: text('value').notNull(),
-  createdAt: integer('created_at').default(Math.floor(Date.now() / 1000)),
+  createdAt: integer('created_at'),
 });
 
 export type Config = typeof config.$inferSelect;

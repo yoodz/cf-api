@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "67d123e0-b698-4429-9ad2-7508804ff369",
+  "id": "a297455d-6cc3-4baa-b868-ba3ab7ac26b2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "article": {
@@ -47,32 +47,28 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 0
+          "autoincrement": false
         },
         "like": {
           "name": "like",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 0
+          "autoincrement": false
         },
         "update_at": {
           "name": "update_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 1743752052
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 1743752052
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -110,8 +106,7 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 1743752052
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -149,56 +144,49 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "''"
+          "autoincrement": false
         },
         "is_deleted": {
           "name": "is_deleted",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": false
+          "autoincrement": false
         },
         "error_count": {
           "name": "error_count",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 0
+          "autoincrement": false
         },
         "audit_status": {
           "name": "audit_status",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 0
+          "autoincrement": false
         },
         "init": {
           "name": "init",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": false
+          "autoincrement": false
         },
         "update_at": {
           "name": "update_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 1743752052
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": 1743752052
+          "autoincrement": false
         }
       },
       "indexes": {

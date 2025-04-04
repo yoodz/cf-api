@@ -7,10 +7,10 @@ const article = sqliteTable('article', {
   link: text('link').notNull(),
   pubDate: text('pubDate').notNull(),
   hostname: text('hostname').notNull(),
-  pv: integer('pv').default(0),
-  like: integer('like').default(0),
-  updateAt: integer('update_at').default(Math.floor(Date.now() / 1000)).$onUpdate(() => Math.floor(Date.now() / 1000)), // 自动更新
-  createdAt: integer('created_at').default(Math.floor(Date.now() / 1000)),
+  pv: integer('pv'),
+  like: integer('like'),
+  updateAt: integer('update_at'), // 自动更新
+  createdAt: integer('created_at'),
 });
 
 export type Article = typeof article.$inferSelect;

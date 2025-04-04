@@ -26,7 +26,7 @@
       "binding": "DB",
       "database_name": "blog",
       "database_id": "74a9fb17-594b-4258-a7fe-e31fd0732396",
-      "migrations_dir": "src/db/migrations"
+      "migrations_dir": "migrations"
     }
   ],
   // "ai": {

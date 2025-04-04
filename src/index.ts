@@ -1,9 +1,11 @@
 // src/index.ts
 import { Hono } from 'hono';
-import { users } from './db/schema/users';
+// import { users } from './db/schema/users';
 import { createDbClient } from './db/client';
-import type { User, NewUser } from './db/schema/users';
+// import type { User, NewUser } from './db/schema/users';
 import article from './article'
+import rss from './rss'
+import config from './config'
 
 type Bindings = {
   DB: D1Database;
@@ -12,25 +14,25 @@ type Bindings = {
 const app = new Hono<{ Bindings: Bindings }>();
 
 // 获取所有用户
-app.get('/users', async (c) => {
-  console.log(c.env, 'index-15')
-  const db = createDbClient(c.env.DB);
-  const allUsers = await db.select().from(users).all();
-  return c.json(allUsers);
-});
+// app.get('/users', async (c) => {
+//   console.log(c.env, 'index-15')
+//   const db = createDbClient(c.env.DB);
+//   const allUsers = await db.select().from(users).all();
+//   return c.json(allUsers);
+// });
 
-// 创建新用户
-app.post('/users', async (c) => {
-  const db = createDbClient(c.env.DB);
-  const data = await c.req.json<NewUser>();
+// // 创建新用户
+// app.post('/users', async (c) => {
+//   const db = createDbClient(c.env.DB);
+//   const data = await c.req.json<NewUser>();
   
-  try {
-    const newUser = await db.insert(users).values(data).returning().get();
-    return c.json(newUser, 201);
-  } catch (e) {
-    return c.json({ error: 'Failed to create user' }, 400);
-  }
-});
+//   try {
+//     const newUser = await db.insert(users).values(data).returning().get();
+//     return c.json(newUser, 201);
+//   } catch (e) {
+//     return c.json({ error: 'Failed to create user' }, 400);
+//   }
+// });
 
 // 获取单个用户
 // app.get('/users/:id', async (c) => {
@@ -76,4 +78,6 @@ app.post('/users', async (c) => {
 // });
 
 app.route('article', article)
+app.route('rss', rss)
+app.route('config', config)
 export default app;

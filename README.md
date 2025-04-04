@@ -13,9 +13,9 @@ npx wrangler d1 migrations apply hono-d1-db  # 生产环境
 
 
 
-## 生成数据库迁移文件
+## 生成数据库迁移文件 该命令读取 drizzle.config.ts 配置
 npx drizzle-kit generate
-该命令读取 drizzle.config.ts 配置
+
 
 ## 本地开发
 npx wrangler d1 migrations apply blog --local

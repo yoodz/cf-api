@@ -2,6 +2,8 @@
 import { Hono } from 'hono';
 // import { users } from './db/schema/users';
 import { createDbClient } from './db/client';
+import { cors } from 'hono/cors'
+
 // import type { User, NewUser } from './db/schema/users';
 import article from './article'
 import rss from './rss'
@@ -12,7 +14,7 @@ type Bindings = {
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
-
+app.use('*', cors())
 // 获取所有用户
 // app.get('/users', async (c) => {
 //   console.log(c.env, 'index-15')

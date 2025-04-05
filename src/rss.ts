@@ -1,6 +1,5 @@
-// authors.ts
 import { Hono } from 'hono'
-import { desc } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { createDbClient } from './db/client';
 import rss from './db/schema/rss'
 import type { Rss, NewRss } from './db/schema/rss';
@@ -12,18 +11,11 @@ type Bindings = {
 const app = new Hono<{ Bindings: Bindings }>();
 
 app.get('/', async (c) => {
-    const { page, page_size } = c.req.query()
-    console.log(page, page_size, 'index-15')
-    const currentPage = parseInt(page, 10) || 1;
-    const pageSize = Math.min(parseInt(page_size, 10) || 20, 20);
-
+    const { init } = c.req.query()
     const db = createDbClient(c.env.DB);
-    const allUsers = await db.select().from(rss)
-        .limit(pageSize)
-        .offset((currentPage - 1) * pageSize)
-        .orderBy(desc(rss.updateAt)).all();
-    console.log(allUsers, 'rss-25')
-    return c.json(allUsers);
+    const allRss = await db.select().from(rss).where(and(eq(rss.isDeleted, 0), eq(rss.auditStatus, 1), eq(rss.init, +init))).all();
+    console.log(allRss, 'rss-25')
+    return c.json({ result: allRss });
 })
 
 app.post('/', async (c) => {
@@ -39,13 +31,18 @@ app.post('/', async (c) => {
     }
 });
 
+// 更新rss 出错次数，更新时间
 app.post('/update', async (c) => {
     const db = createDbClient(c.env.DB);
     const data = await c.req.json<NewRss>();
-    console.log(data, 'rss-18')
+    const { rssUrl, errorCount, updateAt, init } = data
     try {
-        const newRss = await db.insert(rss).values(data).returning().get();
-        return c.json(newRss, 201);
+        const result = await db.update(rss)
+            .set({ errorCount, init, updateAt })
+            .where(eq(rss.rssUrl, rssUrl))
+            .returning({ id: rss.id })
+            .get();
+        return c.json(result, 201);
     } catch (e) {
         console.log(e, 'rss-23')
         return c.json({ error: 'Failed to create rss' }, 400);
@@ -66,8 +63,7 @@ app.post('/addMany', async (c) => {
         );
         const results = await Promise.all(promises);
 
-        // const newRss = await db.insert(rss).values(dataList.list).returning({ id: rss.id }).get();
-        return c.json(results, 201);
+        return c.json({ results }, 201);
     } catch (e) {
         console.log(e, 'rss-23')
         return c.json({ error: 'Failed to create rss' }, 400);

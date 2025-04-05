@@ -9,7 +9,7 @@ const rss = sqliteTable('rss', {
   isDeleted: integer('is_deleted'),
   errorCount: integer('error_count'),
   auditStatus: integer('audit_status'), // 审核状态 0 未审核 1 通过
-  init: integer('init', { mode: 'boolean' }),
+  init: integer('init'),
   updateAt: integer('update_at'),
   createdAt: integer('created_at')
 });

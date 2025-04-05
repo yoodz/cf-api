@@ -1,4 +1,3 @@
-// authors.ts
 import { Hono } from 'hono'
 
 import { eq, asc, desc, sql } from 'drizzle-orm';

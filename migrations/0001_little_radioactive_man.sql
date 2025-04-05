@@ -1,0 +1,1 @@
+DROP INDEX `rss_rss_url_unique`;

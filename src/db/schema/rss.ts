@@ -3,7 +3,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 const rss = sqliteTable('rss', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  rssUrl: text('rss_url').notNull().unique(),
+  rssUrl: text('rss_url').notNull(),
   title: text('title').notNull(),
   email: text('email'),
   isDeleted: integer('is_deleted'),

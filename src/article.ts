@@ -44,6 +44,7 @@ app.get('/', async (c) => {
         totalRss = await db
             .select({ count: sql<number>`count(*)` })
             .from(rss)
+            .where(eq(rss.isDeleted, 0))
             .get();
         // 拿总的收录数据，成功的收录数据
     }

@@ -21,6 +21,11 @@ app.get('/', async (c) => {
 app.post('/', async (c) => {
     const db = createDbClient(c.env.DB);
     const data = await c.req.json<NewRss>();
+    data.isDeleted = 0
+    data.errorCount = 0
+    data.auditStatus = 1
+    data.init = 0
+    data.createdAt = Date.now()
     console.log(data, 'rss-18')
     try {
         const newRss = await db.insert(rss).values(data).returning().get();
@@ -39,6 +44,23 @@ app.post('/update', async (c) => {
     try {
         const result = await db.update(rss)
             .set({ errorCount, init, updateAt })
+            .where(eq(rss.rssUrl, rssUrl))
+            .returning({ id: rss.id })
+            .get();
+        return c.json(result, 201);
+    } catch (e) {
+        console.log(e, 'rss-23')
+        return c.json({ error: 'Failed to create rss' }, 400);
+    }
+});
+
+app.post('/delete', async (c) => {
+    const db = createDbClient(c.env.DB);
+    const data = await c.req.json<NewRss>();
+    const { rssUrl } = data
+    try {
+        const result = await db.update(rss)
+            .set({ isDeleted: 1 })
             .where(eq(rss.rssUrl, rssUrl))
             .returning({ id: rss.id })
             .get();

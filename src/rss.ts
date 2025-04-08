@@ -10,6 +10,7 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
+// 获取rss
 app.get('/', async (c) => {
     const { init } = c.req.query()
     const db = createDbClient(c.env.DB);
@@ -18,6 +19,7 @@ app.get('/', async (c) => {
     return c.json({ result: allRss });
 })
 
+// 新增rss
 app.post('/', async (c) => {
     const db = createDbClient(c.env.DB);
     const data = await c.req.json<NewRss>();
@@ -71,7 +73,7 @@ app.post('/delete', async (c) => {
     }
 });
 
-
+// 一次性新增多个
 app.post('/addMany', async (c) => {
     const db = createDbClient(c.env.DB);
     const dataList = await c.req.json();
